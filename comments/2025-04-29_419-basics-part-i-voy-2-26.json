@@ -1,0 +1,250 @@
+{
+  "post_id": 6800,
+  "slug": "419-basics-part-i-voy-2-26",
+  "title": "#419: Basics, Part I (VOY 2.26)",
+  "date": "2025-04-29T03:35:56",
+  "link": "https://trekamdienstag.de/2025/04/29/419-basics-part-i-voy-2-26/",
+  "comment_count": 30,
+  "comments": [
+    {
+      "comment_id": 24245,
+      "date": "2025-11-01T08:05:24",
+      "author_name": "CaptainMaex",
+      "content": "<p>Was die Doktor Szene im Weltraum angeht, ich fand die ganz gut. Die Umsetzung ist vill. Nur so semigut gelungen aber war besser wie die geschrumpft Doktor Version aus der 2. Folge der 1. Staffel. Robert Picardo hat hier sein beste gegeben. Vill. Hat die Szene den Autoren beim gucken auch nicht mehr so gut gefallen aber weil die so teuer war hat man die drin gelassen und ich würde sie nicht missen wollen.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"24245\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 0,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21983,
+      "date": "2025-06-07T16:55:10",
+      "author_name": "Sebastian (TaD)",
+      "content": "<p>Zwei Werte reichen aus, ja, aber bei Voyager ist der zweite in vielen Folgen nur eine einstellige Zahl. Also auf einer Achse nur zehn Richtungen. Zum Navigieren ist das viel zu grob. Und: Mir erscheint bei den wahnsinnigen Distanzen im All sogar eine Unterteilung in &#8222;nur&#8220; 360° ohne Nachkommastellen zu ungenau, um nicht öchzig Lichtjahre entfernt am Ziel vorbeizuschießen.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21983\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 21981,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21981,
+      "date": "2025-06-07T16:40:15",
+      "author_name": "Stephan",
+      "content": "<p>Verstehe, dann wäre es wirklich einigermaßen beliebig, ob man führende Nullen weglässt. Ich würde ja sagen, entweder immer angeben oder nie.<br />\nWenn es Gradangaben sind, würde es auch erklären, wieso 2 Werte ausreichen. Passt ja auch zu Bearing (weiß grad nicht, wie es in der Synchro heißt)<br />\nAber ich fürchte, Star Trek ist auch bei Koordinaten nicht konsistent.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21981\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 21980,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21980,
+      "date": "2025-06-07T16:16:57",
+      "author_name": "Sebastian (TaD)",
+      "content": "<p>Das hast Du tatsächlich nicht richtig verstanden. Die Koordinatenangaben sind, soweit ich weiß, nicht gegliedert in &#8222;vor dem Komma&#8220; und &#8222;nach dem Komma&#8220;, sondern sind größenordnungsmäßig gleichberechtigte Angaben, jeweils auf um 90° zueinander stehenden Achsen. Nur eine solche doppelte Angabe ermöglicht es, vom aktuell eingelegten Vektor des Schiffes ausgehend jeden erdenklichen Punkt im dreidimensionalen Raum anzusteuern. Ich wüsste nicht, in welche Richtung eine einzelne Kommazahl wie 12,8 zeigen sollte.</p>\n<p>Ob man in einem 360°-System sagt 341°|52° oder 341|52 oder um der Dreistelligkeit wegen 341|052, das ist, was das Weglassen der vorderen Null bei 52 angeht, unerheblich.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21980\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 21979,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21979,
+      "date": "2025-06-07T15:54:59",
+      "author_name": "Stephan",
+      "content": "<p>Wenn ich Sebastian richtig verstanden habe, will er bei den Koordinaten ein 0 direkt nach dem Komma weglassen. Das wäre ja aber eine ganz andere Zahl.<br />\n1,05 ist ja viel kleiner als 1,5<br />\nNullen am Ende der Nachkommastellen kann man dagegen problemlos weglassen.<br />\n1,50 ist das gleiche wie 1,5</p>\n<p>Viele Grüße,<br />\nStephan</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21979\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 21296,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21459,
+      "date": "2025-05-07T23:21:16",
+      "author_name": "Dwight",
+      "content": "<p>Warum ist der Doktor dem Laser nicht ausgewichen in dem er mit Schwimmbewegungen &#8222;wegschwimmt&#8220;. So wie Daffy Duck, wenn er bemerkt, dass er versehentlich über eine Klippe gelaufen ist. Schade, Schade, vertane Chance.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21459\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 0,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21458,
+      "date": "2025-05-07T23:19:40",
+      "author_name": "Doris",
+      "content": "<p>Man erlaube mir einen kleinen Klugschiss hinterherzuwerfen: Ce Acatl lebte im 10. Jh., da gibt&#8217;s ein leichtes chronologisches Gefälle zu den Conquistadores 😀</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21458\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">1    </span>\n</div></div>",
+      "parent": 0,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21413,
+      "date": "2025-05-06T09:47:38",
+      "author_name": "Michael",
+      "content": "<p>Ereignis -&gt; Ergebnis</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21413\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 0,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21412,
+      "date": "2025-05-06T09:46:52",
+      "author_name": "Michael",
+      "content": "<p>Irgendwo in meinem Kopf ist Basics in einer Version abgespeichert, wo die Geschehnisse im Ereignis dazu führen, dass die Voyager- sich mehr wie die Equinox-Crew verhält und andere Prioritäten setzt, den Überlebensinstinkt vor das Starfleet-Protokoll stellt. Aber das wäre eine sehr, sehr dunkle Serie geworden.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21412\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 0,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21386,
+      "date": "2025-05-03T21:33:35",
+      "author_name": "Doris",
+      "content": "<p>Da hatte der Doktor genau die richtige Frisur für den Effekt &#8211; bei offenen, langen Haare Schwerelosigkeit war damals bestimmt recht&#8230;komplex 🙂 </p>\n<p>danke dass du den Link geposted hast &#8211; es ist immer wieder spannend zu sehen wie solche Special Effects realisiert wurden/werden.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21386\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 21349,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21382,
+      "date": "2025-05-03T13:00:01",
+      "author_name": "Michael",
+      "content": "<p>Das könnte &#8211; nicht als Affront gemeint &#8211; jede beliebige Star Trek Discovery Folge beschreiben.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21382\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">2    </span>\n</div></div>",
+      "parent": 21377,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21377,
+      "date": "2025-05-03T10:43:17",
+      "author_name": "BjoernHH",
+      "content": "<p>Aber ich fand es trotzdem spannend inszeniert.<br />\nSie verhalten sich alle nicht schlau, aber die Folge hat ein tolles Tempo.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21377\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 0,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21358,
+      "date": "2025-05-02T17:26:08",
+      "author_name": "Michael",
+      "content": "<p>Wenn Chantré-Chakotay den eigenen Kipppunkt sozusagen lange überschritten hat. Spiritualität durch Spirituosen.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21358\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 21357,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21357,
+      "date": "2025-05-02T16:46:24",
+      "author_name": "Marcus",
+      "content": "<p>Ich habe noch eine weitere Erklärung für den Geist: und zwar hat sich Chakotay vor der Meditation schön etwas geraucht und einfach alles komplett herbei halluziniert. Und möglicherweise gab es auch mal irgendwo in der Vergangenheit jemanden des selben Namens, der ein bekannter Anführer geworden ist &#8211; aber der ist eben nur irgendein Typ gleichen Namens, den ihr bei der Recherche gefunden habt und gar nicht mit Chakotay verwandt&#8230; Chakotay wird bestimmt nicht hinterher auf Space-Wikipedia nachgeguckt haben 😉</p>\n<p>Er hat unterbewusst nach möglichen Gründen gesucht und ist dann beim Argument &#8222;was wäre, wenn deshalb das Potenzial dieser Person nicht entfaltet werden könnte, weil ich ihn nicht rette?!&#8220; herausgekommen und sich dieses als lustige Geschichte erklärt, wie man es heutzutage auch von LLMs kennt.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21357\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 0,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21349,
+      "date": "2025-05-02T09:23:29",
+      "author_name": "TaiFei",
+      "content": "<p>Was diese Frage nach dem &#8222;Schwerelos&#8220;-Effekt angeht. So wie der aussieht, könnte der in etwas so realisiert worden sein, wie hier im Making of eines MV zu sehen ist welches der Director Ben Proulx produziert hat.<br />\n<a href=\"https://www.youtube.com/watch?v=PP0C3SU7j5Q\" rel=\"nofollow ugc\">https://www.youtube.com/watch?v=PP0C3SU7j5Q</a></p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21349\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">1    </span>\n</div></div>",
+      "parent": 0,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21348,
+      "date": "2025-05-02T06:43:24",
+      "author_name": "Florian",
+      "content": "<p>Die macht Diät</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21348\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 21347,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21347,
+      "date": "2025-05-02T06:41:02",
+      "author_name": "Michael",
+      "content": "<p>Bonusfrage für den zweiten Teil: Wovon ernährt sich die Kreatur auf dem Planeten? Eine besonders üppige Flora und Fauna wird nicht gezeigt. Der Rewatch hat nicht stark an den Eisplaneten in Star Trek (2009) erinnert, auf dem Kirk von einer großen Kreatur gejagt wurde. Gut, in Basics handelt es sich immerhin um ein Plot Device, im Film war es reiner Cut Scene Eye Candy.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21347\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">1    </span>\n</div></div>",
+      "parent": 21338,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21339,
+      "date": "2025-05-01T21:24:34",
+      "author_name": "Florian",
+      "content": "<p>Die Folge ist purer trash im Denver Clan Style wie Michael schon schreibt fand sie aber trotzdem ok 👌 eurer Besprechung ist aber viel besser Kazon Frachter vor der abwrackend Prämie 🙈👌😂😂😂</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21339\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">1    </span>\n</div></div>",
+      "parent": 0,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21338,
+      "date": "2025-05-01T20:34:20",
+      "author_name": "Michael",
+      "content": "<p>Mich hat Basics abhängt. Der Zweiteiler bietet für mich null Spannung, was mehrere Gründe hat. Viele davon wurden von euch angesprochen. Die Denver-Clan-Handlung um Chakotays Sohn und Seskas vermeintlichen Tod führt zu wirklich skurrilen Szenen, nach deren Betrachtung die Suspension of Disbelief regelmäßig wie das Überdruckventil des Dampfkochtopfs auslöst. So ist die Voyager ein Schiff, dessen Brückencrew regelt und anordnet, die niedere Mannschaft alles ohne Murren und Knurren mitträgt. Janeway überlässt Chakotay die Wahl, wie jetzt verfahren wird &#8211; eine interessante Wahl, die ihre Eignung als Captain in Zweifel zieht. </p>\n<p>Nie wird versucht, das Heft des Handelns in die eigenen Hände zu nehmen, keine Entscheidung ist faktenbasiert. Ist es wirklich Chakotays Kind? Weiß man nicht. Ist Seska tot? Weiß man nicht. Was ist mit dem Kazon an Bord? Weiß man nicht.</p>\n<p>Besser als Basil Exposition kann ich des daher nicht formulieren: <a href=\"https://youtu.be/1SPk3NjYfmQ?feature=shared\" rel=\"nofollow ugc\">https://youtu.be/1SPk3NjYfmQ?feature=shared</a>.</p>\n<p>Die Grundannahme „Hey, wäre es nicht toll, wenn die Kazon die Voyager erobern und die Crew auf einem unwirklichen Planeten zurücklassen?“ trägt nur, solange die Situation reversibel ist. Das ist während der gesamten Episode gegeben. Da wird sehr viel Plot Armor an die Crew ausgegeben. Die Crewleute, die die Kazon im Zweifel nochmals brauchen, werden von ihnen festgesetzt, die übrigen gekillt. Warum die Kazon jetzt den Bond Villain pullen, die Crew auf einen Planeten aussetzen und nicht gleich alles abschließen, leuchtet mir nicht ein.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21338\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">2    </span>\n</div></div>",
+      "parent": 0,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21333,
+      "date": "2025-05-01T12:32:20",
+      "author_name": "Maestro84",
+      "content": "<p>Genauso seltsam, dass Fähnrich Kim Harald Leutchen herumscheucht. Gibt es da nicht einen höherrangigen Leutnant von den unteren Decks? Aber gut, dass Kapitel übergangene Beförderung vom Harald ist ja ein alter Gag in Voyager. Letzten Endes behummst s&#8217;Rinchen ihn sogar um Jahre höherer Gehaltszahlungen und Rentenpunkte.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21333\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 21329,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21332,
+      "date": "2025-05-01T12:30:15",
+      "author_name": "Maestro84",
+      "content": "<p>Genug Kinder wurden aber empfangen und &#8211; wie auch immer &#8211; großgezogen und Teil der Gemeinschaften. Letzten Endes geht es ja um die Kernfrage, was ein Kind für die Art der Empfängnis kann? Mit der Frage müssen sich Menschen ja leider seit Urzeiten in allen Gegenden der Welt beschäftigen &#8211; nicht nur bei Indianern in Nord- oder Mittelamerika. Wobei ich durchaus einen Unterschied machen würde zwischen der Vergewaltigung einer Frau und einer solchen, die sich ein Stück Genmaterial von hinterm Ellenbogen links unten einpflanzt.  Der Vergleich von Papa Schlauer Hase hinkt also ein wenig.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21332\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">1    </span>\n</div></div>",
+      "parent": 21314,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21329,
+      "date": "2025-05-01T06:36:57",
+      "author_name": "Florian",
+      "content": "<p>Seltsam fand ich immer das Neelix auf einmal Kommando Funktion hatte</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21329\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 0,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21314,
+      "date": "2025-04-30T12:41:51",
+      "author_name": "stef baura s",
+      "content": "<p>hallo Ihr beiden,<br />\ndas war wieder eine fabelhafte Besprechung. </p>\n<p>Für mich jedenfalls auch eine überraschend gute Folge, an die ich auch wieder null Erinnerung habe und daher gespannt bin, wie es weitergeht. </p>\n<p>Was mir übel aufgestoßen ist, ist der Satz vom Chakotay-Papa zum Thema ausgetragene Schwangerschaften nach Vergewaltigungen. </p>\n<p>Das ist ein schlimme Verharmlosung eines grausamen Verbrechens, das runterzuspielen mit sinngemäß &#8222;und wir haben die Babys dann alle geliebt&#8220; find ich wirklich krass.<br />\nnoch mehr Brisanz gewinnt diese Deutung durch auch damals schon verfolgte &#8222;prolife&#8220; Politik, alle Abtreibungen zu verbieten. Und wohin dieser frauenfeindliche Fanatismus führt, können wir jetzt in Echtzeit anschauen. </p>\n<p>Ich denke, man kann schon davon ausgehen, dass in allen Jahrtausenden Frauen versucht haben, Schwangerschaften, die aus Vergewaltigung entstanden sind, zu beenden, oder gar ihr eigenes Leben zu beenden,  und diese Kinder mitnichten einfach mit Freude empfangen wurde.<br />\nIm Rahmen von Eroberungen wurden Massenvergewaltigungen schon immer eingesetzt, um die Bevölkerung zu demoralisieren.<br />\nJe länger ich drüber nachdenke, und hier schreibe, umso mehr rege ich mich über den kleinen Dialog auf&#8230; </p>\n<p>Grüße<br />\nEure Stef</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21314\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">3    </span>\n</div></div>",
+      "parent": 0,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21312,
+      "date": "2025-04-30T09:36:53",
+      "author_name": "Simon (TaD)",
+      "content": "<p>Die Welt ist klein. 😉</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21312\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 21303,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21311,
+      "date": "2025-04-30T09:34:55",
+      "author_name": "Michael from Outer Space",
+      "content": "<p>Zur Luftschacht-Thematik:<br />\nIm &#8222;The Circle&#8220;-Dreiteiler bei DS9 haben wir erfahren, dass die Luftschächte der Station so groß sind, dass sich Spencer &amp; Co. problemlos verstecken können.</p>\n<p>!!!SPOILER-ALARM!!!<br />\nDie Hirogen werden die Voyager ebenfalls kapern und in ein einziges, großes Holodeck verwandeln (siehe &#8222;The Killing Game&#8220;).</p>\n<p>Ich vermute einfach, diese Dinge funktionieren immer genauso, wie es das Drehbuch der jeweiligen Episode verlangt.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21311\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 21306,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21306,
+      "date": "2025-04-29T21:34:32",
+      "author_name": "Mister Incredible",
+      "content": "<p>Moin zusammen,<br />\nAbgesehen von der Entscheidung basierend auf Onkel Freds &#8222;Visionen&#8220;, deren &#8222;tribal panfluteness&#8220; mir zu zäh war muss Starfleet nur aus leicht zu überrumpelnden Anfängern bestehen. Alle bösen Buben und Mädels und Diverse der Galaxie wissen: &#8222;Sende ein Notsignal, dann kommen sie egal wie dämlich deine Story ist, und dann kannst du ihnen das Schiff klauen.&#8220; Du musst nur sagen &#8222;prepare to be boarded.&#8220; Seufz. Wie oft haben wir das schon gesehen? Und wer hätte es dieses mal nicht schon vorher gewusst?</p>\n<p>Darüber hinaus frage ich mich wieso denn eine Voyager die bekanntlich so zügig wie möglich Richtung Heimat düst immer wieder über  dieselben Alien-Nasen stolpern kann? Fliegen die alle parallel als Schattenflotte?</p>\n<p>Das muss dann wohl auch auf den Seska-Kutter zutreffen. Dann noch diese virtuelle/narrative Vaterschaft: ist das für jemanden glaubhaft, dass jemand instantan Daddymotions empfindet gegenüber einem Kind, das nur in der Erzählung eines Racheengels existiert, nur weil dieser dem Herrn Gene entwendete? Also, ich hätte das nicht.</p>\n<p>Die misslungene Doctor-Nummer im Vakuum hat auch mich entgeistert. Das sah so &#8222;gut&#8220; aus wie William Shatner der in &#8222;The Horror at 37.000 feet&#8220; aus dem Flugzeug wirbelt. Boah, schlimm.</p>\n<p>Der Doc ist den Kazon, wie wie sahen, wohl bekannt. Sie wissen auch, dass dieser Zugang zur Datenbank hat und Knöpfe drücken kann. Irgend welche Versuche das EMH abzuschalten? Irgendwelche Versuche das Crewcomplement festzustellen und mit der Zahl der Ausgesetzten abzugleichen? Und wieso verschanzt sich nur der &#8222;schlitzohrige&#8220; Suder im Luftschacht und nicht Ensigns Hinz und Kunz auf einem der Lower Decks?</p>\n<p>Wie Ihr schon erwähntet, stehen nun alle auf einem unbekannten Planeten herum, niemand bangt oder heult, und zünftig schwärmt man sogleich nach Lagerplatz und Wasser aus. Das war&#8217;s.</p>\n<p>Was mir da durch den Kopf ging: Beiläufigkeit. Denn beiläufig wird entschieden aufgrund Freds Wachträumerei, beiläufig wird der Kahn gekapert, und beiläufig geht man, nunmehr gestrandet, zur neuen Tagesordnung über. Bei mir zuckt es nach unten.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21306\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">3    </span>\n</div></div>",
+      "parent": 0,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21303,
+      "date": "2025-04-29T19:54:57",
+      "author_name": "Benedikt",
+      "content": "<p>@Simon,<br />\ngerade hat Facebook mir Dein Profil als Freundschaftsvorschlag präsentiert &#8211; ich denke, das Gesicht kenne ich doch. Offenbar haben wir zwei gemeinsame virtuelle Bekanntschaften&#8230;<br />\nKomme gerade nicht aus dem Grinsen heraus&#8230;</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21303\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">    </span>\n</div></div>",
+      "parent": 0,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21296,
+      "date": "2025-04-29T18:32:16",
+      "author_name": "Doris",
+      "content": "<p>Atmen meine Herren, Atmen! 😀<br />\nDie Besprechung war mal wieder großartig!<br />\nDas in Star Trek öfter mal Fantasy in die Sci Fi reinläuft finde ich auch etwas hakelig. Bei den Bajoranern fühlte es sich noch konsistent an (vielleicht weil die gesamte Kultur sehr spirituell ist und man eben diese Erklärung mit den Wurmloch-Aliens hat), aber schon bei den Vulkaniern und der Gedankenverschmelzung tue ich mir etwas schwer. Bei Discovery und der ganzen Kweijan-Story  hüpfte dann der Hai wie ein Olympionike dem Trampolin&#8230;wirklich schade dass diese Rückgriffe auf alte Folgen untersagt wurden, aber es ist super interessant dass ihr eben auch erklärt dass es eben nicht Unachtsamkeit der Autoren war. Wahrscheinlich sind viele Probleme bei Serien und Filmen auf solche Eingriffe zurück zu führen. Drehbuchschreiben ist ja auch zum Großteil ein Handwerk, und die Autoren ja in der Regel keine Anfänger (hoffentlich :-))</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21296\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">1    </span>\n</div></div>",
+      "parent": 0,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21287,
+      "date": "2025-04-29T10:57:22",
+      "author_name": "Maestro84",
+      "content": "<p>Gute Militärs riskieren aber nicht wegen persönlicher Angelegenheiten die Existenz des ganzen Schiffs. Janeway ist,  militärisch gesehen, keine gute Kapitänin.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21287\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">8    </span>\n</div></div>",
+      "parent": 21286,
+      "status": "approved"
+    },
+    {
+      "comment_id": 21286,
+      "date": "2025-04-29T10:54:49",
+      "author_name": "Kai",
+      "content": "<p>Ja es ist klar, das man in feindliches Gebiert fliegt. Befehl von oben und dann werden die Hacken zusammengeschlagen. Das nennt sich Militär.</p>\n<div class=\"cld-like-dislike-wrap cld-template-2\">\n    <div class=\"cld-like-wrap  cld-common-wrap\">\n    <a href=\"javascript:void(0)\" class=\"cld-like-trigger cld-like-dislike-trigger  \" title=\"Mag ich!\" data-comment-id=\"21286\" data-trigger-type=\"like\" data-restriction=\"cookie\" data-already-liked=\"0\">\n                        <i class=\"fas fa-heart\"></i>\n                </a>\n    <span class=\"cld-like-count-wrap cld-count-wrap\">1    </span>\n</div></div>",
+      "parent": 0,
+      "status": "approved"
+    }
+  ]
+}

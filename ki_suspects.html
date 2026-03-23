@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KI-Verdächtige Kommentare – Trek am Dienstag</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2128;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #f78166;
+      --accent2: #58a6ff;
+      --yellow: #d29922;
+      --red: #da3633;
+      --green: #3fb950;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+           background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* ── Header ── */
+    header {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 16px 24px; display: flex; align-items: center; gap: 20px;
+      flex-wrap: wrap; position: sticky; top: 0; z-index: 10;
+    }
+    header h1 { font-size: 1.1rem; color: var(--accent); white-space: nowrap; }
+    header .subtitle { font-size: 0.78rem; color: var(--text-muted); }
+    .controls { display: flex; gap: 10px; flex-wrap: wrap; flex: 1; justify-content: flex-end; }
+    .controls input, .controls select {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+      padding: 6px 12px; color: var(--text); font-size: 0.82rem; outline: none;
+    }
+    .controls input:focus, .controls select:focus { border-color: var(--accent2); }
+    .stat-badge { background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 3px 10px; font-size: 0.75rem; color: var(--text-muted);
+      white-space: nowrap; }
+    .stat-badge span { color: var(--text); font-weight: 600; }
+    .back-link { font-size: 0.8rem; color: var(--accent2); text-decoration: none;
+      padding: 5px 10px; border: 1px solid var(--border); border-radius: 6px; }
+    .back-link:hover { background: var(--surface2); }
+
+    /* ── Legend ── */
+    .legend {
+      max-width: 960px; margin: 20px auto 0; padding: 0 20px;
+      display: flex; gap: 12px; flex-wrap: wrap;
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.75rem;
+      color: var(--text-muted); }
+    .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── Cards ── */
+    #cards {
+      max-width: 960px; margin: 16px auto 40px; padding: 0 20px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden;
+    }
+    .card-top {
+      display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .score-badge {
+      font-size: 0.8rem; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+      flex-shrink: 0; min-width: 56px; text-align: center;
+    }
+    .score-very-high { background: #3d1a1a; color: #ff6b6b; border: 1px solid #ff4444; }
+    .score-high      { background: #2d2000; color: #ffa726; border: 1px solid #ff9800; }
+    .score-medium    { background: #1a2600; color: #aed581; border: 1px solid #8bc34a; }
+    .score-low       { background: #1a1a2e; color: var(--text-muted); border: 1px solid var(--border); }
+    .card-author { font-weight: 600; font-size: 0.88rem; color: var(--accent2); }
+    .card-episode {
+      font-size: 0.75rem; color: var(--text-muted); flex: 1;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .card-date { font-size: 0.72rem; color: var(--text-muted); flex-shrink: 0; }
+    .card-body { padding: 12px 16px; }
+    .signals { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+    .signal-tag {
+      font-size: 0.7rem; padding: 2px 8px; border-radius: 4px;
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .signal-tag.explicit { background: #3d0000; border-color: #ff4444; color: #ff9999; }
+    .signal-tag.structure { background: #001a33; border-color: #58a6ff; color: #9ecbff; }
+    .signal-tag.phrase { background: #1a1a00; border-color: #d29922; color: #e3b341; }
+    .signal-tag.style { background: #001a00; border-color: #3fb950; color: #7ee787; }
+    .comment-text {
+      font-size: 0.84rem; line-height: 1.6; color: #cdd9e5;
+      border-left: 3px solid var(--border); padding-left: 12px;
+      max-height: 200px; overflow: hidden; transition: max-height 0.3s ease;
+      white-space: pre-wrap;
+    }
+    .comment-text.expanded { max-height: none; }
+    .expand-btn {
+      margin-top: 8px; background: none; border: none; color: var(--accent2);
+      cursor: pointer; font-size: 0.75rem; padding: 0;
+    }
+    .expand-btn:hover { text-decoration: underline; }
+    .no-data { text-align: center; color: var(--text-muted); padding: 60px 20px;
+      font-size: 0.9rem; }
+
+    #loading { text-align: center; padding: 60px; color: var(--text-muted); }
+    .spinner {
+      width: 32px; height: 32px; border: 3px solid var(--border);
+      border-top-color: var(--accent2); border-radius: 50%;
+      animation: spin 0.7s linear infinite; margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Tabs ── */
+    .tabs {
+      max-width: 960px; margin: 16px auto 0; padding: 0 20px;
+      display: flex; gap: 4px; border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      background: none; border: none; color: var(--text-muted); cursor: pointer;
+      padding: 8px 16px; font-size: 0.85rem; border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+    .tab-btn.active { color: var(--text); border-bottom-color: var(--accent2); }
+    .tab-btn:hover:not(.active) { color: var(--text); }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* ── Authors table ── */
+    #authors-pane {
+      max-width: 960px; margin: 16px auto 40px; padding: 0 20px;
+    }
+    .authors-controls {
+      display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; align-items: center;
+    }
+    .authors-controls input {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+      padding: 6px 12px; color: var(--text); font-size: 0.82rem; outline: none; width: 220px;
+    }
+    .authors-controls input:focus { border-color: var(--accent2); }
+    .authors-controls span { font-size: 0.78rem; color: var(--text-muted); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+    thead th {
+      text-align: left; padding: 8px 12px; font-size: 0.72rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted);
+      border-bottom: 1px solid var(--border); cursor: pointer; white-space: nowrap;
+      user-select: none;
+    }
+    thead th:hover { color: var(--text); }
+    thead th.sorted { color: var(--accent2); }
+    thead th .sort-arrow { margin-left: 4px; }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:hover { background: var(--surface2); cursor: pointer; }
+    tbody tr.selected { background: var(--surface2); outline: 1px solid var(--accent2); }
+    tbody td { padding: 8px 12px; vertical-align: middle; }
+    .td-author { font-weight: 600; color: var(--accent2); }
+    .td-num { text-align: right; font-variant-numeric: tabular-nums; }
+    .bar-cell { width: 120px; }
+    .bar-wrap { display: flex; height: 10px; border-radius: 4px; overflow: hidden;
+      background: var(--surface2); gap: 1px; }
+    .bar-seg { height: 100%; }
+    .seg-vh  { background: #ff6b6b; }
+    .seg-h   { background: #ffa726; }
+    .seg-med { background: #aed581; }
+    .seg-low { background: #484f58; }
+    .avg-chip {
+      display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 0.72rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>KI-Verdächtige Kommentare</h1>
+    <div class="subtitle">Heuristische Analyse · Trek am Dienstag</div>
+  </div>
+  <div class="controls">
+    <input id="search" type="search" placeholder="Search…" style="width:200px">
+    <select id="filter-score">
+      <option value="0">All confidence levels</option>
+      <option value="200">Very High (≥200)</option>
+      <option value="100">High (≥100)</option>
+      <option value="50">Medium (≥50)</option>
+    </select>
+    <select id="filter-signal">
+      <option value="">All signal types</option>
+      <option value="phrase">AI phrase pattern</option>
+      <option value="list">List / structure</option>
+      <option value="variance">Sentence uniformity</option>
+      <option value="transition">Transition density</option>
+    </select>
+    <select id="sort-by">
+      <option value="score">Sort: Score</option>
+      <option value="date">Sort: Date</option>
+      <option value="author">Sort: Author</option>
+    </select>
+  </div>
+  <div class="stat-badge" id="stat-shown"></div>
+  <a href="index.html" class="back-link">← Explorer</a>
+</header>
+
+<div class="tabs" id="tabs">
+  <button class="tab-btn active" onclick="switchTab('comments')">Comments</button>
+  <button class="tab-btn" onclick="switchTab('authors')">Authors</button>
+</div>
+
+<div class="legend" id="legend-bar">
+  <div class="legend-item"><span class="dot" style="background:#ff6b6b"></span>Very High ≥200 – likely AI-generated</div>
+  <div class="legend-item"><span class="dot" style="background:#ffa726"></span>High ≥100 – strong signals</div>
+  <div class="legend-item"><span class="dot" style="background:#aed581"></span>Medium ≥50 – notable patterns</div>
+  <div class="legend-item"><span class="dot" style="background:#484f58"></span>Low ≥20 – weak signals</div>
+</div>
+
+<div id="cards">
+  <div id="loading"><div class="spinner"></div>Analysing…</div>
+</div>
+
+<div id="authors-pane" style="display:none">
+  <div class="authors-controls">
+    <input id="author-table-search" type="search" placeholder="Filter authors…">
+    <span id="author-table-stat"></span>
+  </div>
+  <table id="authors-table">
+    <thead>
+      <tr>
+        <th onclick="sortTable('rank')"     data-col="rank">    Rank <span class="sort-arrow">↕</span></th>
+        <th onclick="sortTable('author')"   data-col="author">  Author <span class="sort-arrow">↕</span></th>
+        <th onclick="sortTable('total')"    data-col="total"    class="td-num sorted">Total <span class="sort-arrow">↓</span></th>
+        <th onclick="sortTable('very_high')"data-col="very_high"class="td-num">Very High <span class="sort-arrow">↕</span></th>
+        <th onclick="sortTable('high')"     data-col="high"     class="td-num">High <span class="sort-arrow">↕</span></th>
+        <th onclick="sortTable('medium')"   data-col="medium"   class="td-num">Medium <span class="sort-arrow">↕</span></th>
+        <th onclick="sortTable('low')"      data-col="low"      class="td-num">Low <span class="sort-arrow">↕</span></th>
+        <th onclick="sortTable('avg')"      data-col="avg"      class="td-num">Avg Score <span class="sort-arrow">↕</span></th>
+        <th>Breakdown</th>
+      </tr>
+    </thead>
+    <tbody id="authors-tbody"></tbody>
+  </table>
+</div>
+
+<script>
+let suspects = [];
+let filtered = [];
+
+function scoreClass(s) {
+  if (s >= 200) return 'score-very-high';
+  if (s >= 100) return 'score-high';
+  if (s >= 50)  return 'score-medium';
+  return 'score-low';
+}
+
+function scoreLabel(s) {
+  if (s >= 200) return 'Very High';
+  if (s >= 100) return 'High';
+  if (s >= 50)  return 'Medium';
+  return 'Low';
+}
+
+function signalClass(sig) {
+  if (/explicit/i.test(sig)) return 'explicit';
+  if (/list|struct|header|html/i.test(sig)) return 'structure';
+  if (/phrase/i.test(sig)) return 'phrase';
+  if (/variance|transition|uniform/i.test(sig)) return 'style';
+  return '';
+}
+
+function formatDate(d) {
+  const dt = new Date(d);
+  return dt.toLocaleDateString('de-DE', {day:'2-digit', month:'2-digit', year:'numeric'});
+}
+
+function renderCards() {
+  const search = document.getElementById('search').value.toLowerCase();
+  const minScore = parseInt(document.getElementById('filter-score').value) || 0;
+  const sigFilter = document.getElementById('filter-signal').value.toLowerCase();
+  const sortBy = document.getElementById('sort-by').value;
+
+  filtered = suspects.filter(s => {
+    if (s.score < minScore) return false;
+    if (sigFilter && !s.signals.some(sig => sig.toLowerCase().includes(sigFilter))) return false;
+    if (search && !s.author_name.toLowerCase().includes(search) &&
+        !s.text.toLowerCase().includes(search) &&
+        !s.post_title.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  filtered.sort((a, b) => {
+    if (sortBy === 'date')   return b.date.localeCompare(a.date);
+    if (sortBy === 'author') return a.author_name.localeCompare(b.author_name);
+    return b.score - a.score;
+  });
+
+  document.getElementById('stat-shown').innerHTML =
+    `<span>${filtered.length}</span> / ${suspects.length} suspects`;
+
+  if (filtered.length === 0) {
+    document.getElementById('cards').innerHTML = '<div class="no-data">No suspects match the current filter.</div>';
+    return;
+  }
+
+  document.getElementById('cards').innerHTML = filtered.map((s, idx) => {
+    const signals = s.signals.map(sig =>
+      `<span class="signal-tag ${signalClass(sig)}">${sig.length > 70 ? sig.slice(0,70)+'…' : sig}</span>`
+    ).join('');
+
+    const text = s.text.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const needsExpand = s.text.length > 400;
+
+    return `<div class="card">
+      <div class="card-top">
+        <span class="score-badge ${scoreClass(s.score)}">${s.score} · ${scoreLabel(s.score)}</span>
+        <span class="card-author">${s.author_name}</span>
+        <span class="card-episode" title="${s.post_title}">📺 ${s.post_title}</span>
+        <span class="card-date">${formatDate(s.date)}</span>
+      </div>
+      <div class="card-body">
+        <div class="signals">${signals}</div>
+        <div class="comment-text" id="ct${idx}">${text}</div>
+        ${needsExpand ? `<button class="expand-btn" onclick="toggleExpand('ct${idx}', this)">▼ Show more</button>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleExpand(id, btn) {
+  const el = document.getElementById(id);
+  if (el.classList.toggle('expanded')) {
+    btn.textContent = '▲ Show less';
+  } else {
+    btn.textContent = '▼ Show more';
+  }
+}
+
+async function loadData() {
+  suspects = await fetch('comments/ki_suspects.json').then(r => r.json());
+  document.getElementById('loading').remove();
+  buildAuthorRows();
+  renderCards();
+}
+
+document.getElementById('search').addEventListener('input', renderCards);
+document.getElementById('filter-score').addEventListener('change', renderCards);
+document.getElementById('filter-signal').addEventListener('change', renderCards);
+document.getElementById('sort-by').addEventListener('change', renderCards);
+document.getElementById('author-table-search').addEventListener('input', renderAuthorsTable);
+
+loadData();
+
+/* ── Tabs ── */
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) =>
+    b.classList.toggle('active', ['comments','authors'][i] === tab));
+  document.getElementById('cards').style.display        = tab === 'comments' ? '' : 'none';
+  document.getElementById('legend-bar').style.display   = tab === 'comments' ? '' : 'none';
+  document.getElementById('authors-pane').style.display = tab === 'authors'  ? '' : 'none';
+  // hide comment controls from header when on authors tab
+  document.querySelector('.controls').style.display = tab === 'comments' ? '' : 'none';
+  if (tab === 'authors') renderAuthorsTable();
+}
+
+/* ── Authors table ── */
+let authorRows = [];
+let tableSortCol = 'total';
+let tableSortAsc = false;
+
+function buildAuthorRows() {
+  const map = {};
+  for (const s of suspects) {
+    if (!map[s.author_name]) map[s.author_name] = {author: s.author_name, very_high:0, high:0, medium:0, low:0, total:0, scores:[]};
+    const d = map[s.author_name];
+    d.total++;
+    d.scores.push(s.score);
+    if (s.score >= 200) d.very_high++;
+    else if (s.score >= 100) d.high++;
+    else if (s.score >= 50)  d.medium++;
+    else d.low++;
+  }
+  authorRows = Object.values(map).map(d => ({
+    ...d,
+    avg: Math.round(d.scores.reduce((a,b)=>a+b,0) / d.scores.length),
+    max: Math.max(...d.scores),
+  }));
+}
+
+function avgChip(avg) {
+  let cls = 'score-low', label = 'Low';
+  if (avg >= 200) { cls='score-very-high'; label='Very High'; }
+  else if (avg >= 100) { cls='score-high'; label='High'; }
+  else if (avg >= 50)  { cls='score-medium'; label='Medium'; }
+  return `<span class="avg-chip ${cls}">${avg}</span>`;
+}
+
+function renderAuthorsTable() {
+  const q = document.getElementById('author-table-search').value.toLowerCase();
+  let rows = q ? authorRows.filter(r => r.author.toLowerCase().includes(q)) : [...authorRows];
+
+  rows.sort((a,b) => {
+    const av = a[tableSortCol], bv = b[tableSortCol];
+    if (typeof av === 'string') return tableSortAsc ? av.localeCompare(bv) : bv.localeCompare(av);
+    return tableSortAsc ? av - bv : bv - av;
+  });
+
+  // Assign rank based on total (unfiltered)
+  const totalRanked = [...authorRows].sort((a,b) => b.total - a.total);
+  const rankMap = {};
+  totalRanked.forEach((r,i) => rankMap[r.author] = i+1);
+
+  document.getElementById('author-table-stat').textContent =
+    `${rows.length} author${rows.length!==1?'s':''} with ≥1 suspect comment`;
+
+  document.getElementById('authors-tbody').innerHTML = rows.map(r => {
+    const max = r.total;
+    const pct = n => max > 0 ? Math.round((n/max)*100) : 0;
+    return `<tr onclick="filterByAuthor(${JSON.stringify(r.author)})">
+      <td class="td-num">${rankMap[r.author]}</td>
+      <td class="td-author">${r.author}</td>
+      <td class="td-num"><strong>${r.total}</strong></td>
+      <td class="td-num">${r.very_high > 0 ? `<span style="color:#ff6b6b;font-weight:600">${r.very_high}</span>` : '<span style="color:var(--text-muted)">–</span>'}</td>
+      <td class="td-num">${r.high   > 0 ? `<span style="color:#ffa726">${r.high}</span>`   : '<span style="color:var(--text-muted)">–</span>'}</td>
+      <td class="td-num">${r.medium > 0 ? `<span style="color:#aed581">${r.medium}</span>` : '<span style="color:var(--text-muted)">–</span>'}</td>
+      <td class="td-num">${r.low    > 0 ? `<span style="color:var(--text-muted)">${r.low}</span>` : '<span style="color:var(--text-muted)">–</span>'}</td>
+      <td class="td-num">${avgChip(r.avg)}</td>
+      <td class="bar-cell">
+        <div class="bar-wrap" title="VH:${r.very_high} H:${r.high} M:${r.medium} L:${r.low}">
+          <div class="bar-seg seg-vh"  style="width:${pct(r.very_high)}%"></div>
+          <div class="bar-seg seg-h"   style="width:${pct(r.high)}%"></div>
+          <div class="bar-seg seg-med" style="width:${pct(r.medium)}%"></div>
+          <div class="bar-seg seg-low" style="width:${pct(r.low)}%"></div>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  // Update sort arrows
+  document.querySelectorAll('thead th').forEach(th => {
+    const col = th.dataset.col;
+    th.classList.toggle('sorted', col === tableSortCol);
+    const arrow = th.querySelector('.sort-arrow');
+    if (arrow) arrow.textContent = col === tableSortCol ? (tableSortAsc ? '↑' : '↓') : '↕';
+  });
+}
+
+function sortTable(col) {
+  if (tableSortCol === col) tableSortAsc = !tableSortAsc;
+  else { tableSortCol = col; tableSortAsc = false; }
+  renderAuthorsTable();
+}
+
+function filterByAuthor(name) {
+  switchTab('comments');
+  document.getElementById('search').value = name;
+  renderCards();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trek am Dienstag – Comment Explorer</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2128;
+      --border: #30363d;
+      --accent: #f78166;
+      --accent2: #58a6ff;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --gold: #d29922;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+           background: var(--bg); color: var(--text); height: 100vh;
+           display: flex; flex-direction: column; overflow: hidden; }
+
+    /* ── Header ── */
+    header {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 12px 20px; display: flex; align-items: center; gap: 16px;
+      flex-shrink: 0;
+    }
+    header h1 { font-size: 1.1rem; font-weight: 600; color: var(--accent); white-space: nowrap; }
+    header .subtitle { font-size: 0.8rem; color: var(--text-muted); }
+    #search-global {
+      flex: 1; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: 6px 12px; color: var(--text);
+      font-size: 0.85rem; outline: none; max-width: 400px;
+    }
+    #search-global:focus { border-color: var(--accent2); }
+    .stat-badge { background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 3px 10px; font-size: 0.75rem; color: var(--text-muted);
+      white-space: nowrap; }
+    .stat-badge span { color: var(--text); font-weight: 600; }
+
+    /* ── Layout ── */
+    .layout { display: flex; flex: 1; overflow: hidden; }
+
+    /* ── Authors panel ── */
+    #authors-panel {
+      width: 240px; flex-shrink: 0;
+      background: var(--surface); border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .panel-header {
+      padding: 10px 14px; font-size: 0.75rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);
+      border-bottom: 1px solid var(--border); display: flex;
+      align-items: center; justify-content: space-between; flex-shrink: 0;
+    }
+    .panel-header button {
+      background: none; border: none; color: var(--accent2); cursor: pointer;
+      font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;
+    }
+    .panel-header button:hover { background: var(--surface2); }
+    #author-search {
+      margin: 8px; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 5px; padding: 5px 10px; color: var(--text);
+      font-size: 0.8rem; outline: none; flex-shrink: 0;
+    }
+    #author-search:focus { border-color: var(--accent2); }
+    #authors-list { overflow-y: auto; flex: 1; }
+    .author-item {
+      display: flex; align-items: center; padding: 5px 14px; cursor: pointer;
+      border-left: 3px solid transparent; gap: 6px;
+    }
+    .author-item:hover { background: var(--surface2); }
+    .author-item.active { background: var(--surface2); border-left-color: var(--accent2); }
+    .author-name { flex: 1; font-size: 0.82rem; overflow: hidden;
+      text-overflow: ellipsis; white-space: nowrap; }
+    .author-count { font-size: 0.72rem; color: var(--text-muted); flex-shrink: 0;
+      width: 32px; text-align: right; }
+    .author-count.ep { color: var(--accent2); font-weight: 600; }
+    .author-rank { font-size: 0.65rem; color: var(--text-muted); width: 18px;
+      flex-shrink: 0; text-align: right; }
+    .col-headers {
+      display: flex; align-items: center; padding: 3px 14px 3px; gap: 6px;
+      font-size: 0.65rem; color: var(--text-muted); border-bottom: 1px solid var(--border);
+      text-transform: uppercase; letter-spacing: 0.04em; flex-shrink: 0;
+    }
+    .col-headers .ch-name { flex: 1; padding-left: 24px; }
+    .col-headers .ch-count { width: 32px; text-align: right; }
+
+    /* ── Episodes panel ── */
+    #episodes-panel {
+      width: 300px; flex-shrink: 0;
+      background: var(--surface2); border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    #episode-search {
+      margin: 8px; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 5px; padding: 5px 10px; color: var(--text);
+      font-size: 0.8rem; outline: none; flex-shrink: 0;
+    }
+    #episode-search:focus { border-color: var(--accent2); }
+    #episodes-list { overflow-y: auto; flex: 1; }
+    .episode-item {
+      padding: 8px 14px; cursor: pointer; border-left: 3px solid transparent;
+      border-bottom: 1px solid var(--border);
+    }
+    .episode-item:hover { background: var(--surface); }
+    .episode-item.active { background: var(--surface); border-left-color: var(--accent); }
+    .episode-title { font-size: 0.82rem; line-height: 1.3;
+      overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; }
+    .episode-meta { font-size: 0.7rem; color: var(--text-muted); margin-top: 3px;
+      display: flex; gap: 8px; }
+    .comment-pill {
+      background: var(--bg); border-radius: 8px; padding: 1px 6px;
+      font-size: 0.65rem; color: var(--text-muted);
+    }
+    .comment-pill.has-filter { background: var(--accent2); color: var(--bg);
+      font-weight: 600; }
+
+    /* ── Comments panel ── */
+    #comments-panel {
+      flex: 1; display: flex; flex-direction: column; overflow: hidden;
+    }
+    #comments-header {
+      padding: 12px 20px; background: var(--surface);
+      border-bottom: 1px solid var(--border); flex-shrink: 0;
+    }
+    #comments-header h2 { font-size: 0.95rem; margin-bottom: 4px; }
+    #comments-header .meta { font-size: 0.75rem; color: var(--text-muted); }
+    #comments-list { overflow-y: auto; flex: 1; padding: 16px; display: flex;
+      flex-direction: column; gap: 10px; }
+    .comment-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 14px;
+    }
+    .comment-card.is-reply { margin-left: 28px; border-left: 3px solid var(--border); }
+    .comment-card.highlight { border-color: var(--accent2); }
+    .comment-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .comment-author { font-weight: 600; font-size: 0.83rem; color: var(--accent2);
+      cursor: pointer; }
+    .comment-episode-link {
+      font-size: 0.72rem; color: var(--text-muted); margin-bottom: 6px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer;
+    }
+    .comment-episode-link:hover { color: var(--accent2); }
+    .comment-episode-link::before { content: "📺 "; }
+    .comment-author:hover { text-decoration: underline; }
+    .comment-date { font-size: 0.72rem; color: var(--text-muted); }
+    .comment-body { font-size: 0.85rem; line-height: 1.55; color: #cdd9e5; }
+    .comment-body p { margin: 0 0 6px; }
+    .comment-body p:last-child { margin: 0; }
+    .no-data { color: var(--text-muted); font-size: 0.85rem; padding: 20px;
+      text-align: center; }
+
+    /* scrollbars */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #484f58; }
+
+    #loading {
+      position: fixed; inset: 0; background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 16px; z-index: 999;
+    }
+    .spinner {
+      width: 36px; height: 36px; border: 3px solid var(--border);
+      border-top-color: var(--accent2); border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Chart tab ── */
+    #chart-tab-btn { display: none; }  /* shown after data loads */
+    #chart-pane {
+      display: none; flex: 1; flex-direction: column; overflow: hidden;
+      background: var(--bg);
+    }
+    #chart-pane.active { display: flex; }
+    .chart-toolbar {
+      padding: 10px 20px; background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex; gap: 12px; align-items: center; flex-wrap: wrap; flex-shrink: 0;
+    }
+    .chart-toolbar label { font-size: 0.78rem; color: var(--text-muted); }
+    .chart-toolbar select, .chart-toolbar input {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 5px;
+      padding: 5px 10px; color: var(--text); font-size: 0.8rem; outline: none;
+    }
+    .chart-toolbar select:focus, .chart-toolbar input:focus { border-color: var(--accent2); }
+    .chart-toolbar .sep { width: 1px; background: var(--border); height: 20px; }
+    #chart-author-badge {
+      font-size: 0.75rem; background: var(--surface2); border: 1px solid var(--accent2);
+      color: var(--accent2); border-radius: 12px; padding: 2px 10px; display: none;
+    }
+    #chart-wrap {
+      flex: 1; padding: 20px; overflow: hidden; position: relative;
+    }
+    /* nav tab button in header */
+    .nav-tab {
+      background: none; border: none; color: var(--text-muted); cursor: pointer;
+      font-size: 0.82rem; padding: 5px 12px; border-radius: 6px; white-space: nowrap;
+    }
+    .nav-tab:hover { background: var(--surface2); color: var(--text); }
+    .nav-tab.active { background: var(--surface2); color: var(--accent2); }
+  </style>
+</head>
+<body>
+
+<div id="loading">
+  <div class="spinner"></div>
+  <div style="color:var(--text-muted);font-size:0.85rem">Loading comments…</div>
+</div>
+
+<header>
+  <div>
+    <h1>Trek am Dienstag</h1>
+    <div class="subtitle">Comment Explorer</div>
+  </div>
+  <input id="search-global" type="search" placeholder="Search comments…">
+  <div class="stat-badge" id="stat-posts"></div>
+  <div class="stat-badge" id="stat-comments"></div>
+  <div class="stat-badge" id="stat-authors"></div>
+  <div style="display:flex;gap:4px;margin-left:8px">
+    <button class="nav-tab active" id="nav-explorer" onclick="switchMainTab('explorer')">Explorer</button>
+    <button class="nav-tab" id="nav-chart" id="chart-tab-btn" onclick="switchMainTab('chart')">Chart</button>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- Authors -->
+  <div id="authors-panel">
+    <div class="panel-header">
+      <span id="authors-panel-title">Authors</span>
+      <button id="clear-author-btn" onclick="clearAuthorFilter()" style="display:none">✕ clear</button>
+    </div>
+    <input id="author-search" type="search" placeholder="Filter authors…">
+    <div id="authors-col-headers" class="col-headers" style="display:none">
+      <span class="ch-name">Name</span>
+      <span class="ch-count" title="Comments on this episode" style="color:var(--accent2)">Ep.</span>
+      <span class="ch-count" title="All-time total comments">Total</span>
+    </div>
+    <div id="authors-list"></div>
+  </div>
+
+  <!-- Episodes -->
+  <div id="episodes-panel">
+    <div class="panel-header">Episodes</div>
+    <input id="episode-search" type="search" placeholder="Filter episodes…">
+    <div id="episodes-list"></div>
+  </div>
+
+  <!-- Comments -->
+  <div id="comments-panel">
+    <div id="comments-header">
+      <h2 id="comments-title">Select an episode</h2>
+      <div class="meta" id="comments-meta"></div>
+    </div>
+    <div id="comments-list">
+      <div class="no-data">👈 Select an episode to view its comments.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Chart pane (outside .layout, shown/hidden by tab) -->
+<div id="chart-pane">
+  <div class="chart-toolbar">
+    <label>Group by</label>
+    <select id="chart-group">
+      <option value="month">Month</option>
+      <option value="week">Week</option>
+      <option value="year">Year</option>
+    </select>
+    <div class="sep"></div>
+    <label>Type</label>
+    <select id="chart-type">
+      <option value="bar">Bar</option>
+      <option value="line">Line</option>
+    </select>
+    <div class="sep"></div>
+    <label>Author</label>
+    <input id="chart-author-input" type="search" placeholder="All authors…" list="chart-author-list" style="width:180px">
+    <datalist id="chart-author-list"></datalist>
+    <span id="chart-author-badge"></span>
+    <div class="sep"></div>
+    <label><input type="checkbox" id="chart-top10" style="margin-right:4px">Top 50 authors</label>
+    <div class="sep"></div>
+    <label><input type="checkbox" id="chart-cumulative" style="margin-right:4px">Cumulative</label>
+  </div>
+  <div id="chart-wrap">
+    <canvas id="myChart"></canvas>
+  </div>
+</div>
+
+<script>
+let allPosts = [];       // posts_index.json
+let allComments = [];    // all_comments.json
+let commentsByPost = {}; // post_id → [comments]
+let authorStats = {};    // author_name → { total, posts: Set }
+let activeAuthor = null;
+let activePostId = null;  // null = show all episodes for active author
+let globalSearch = '';
+
+function stripHtml(html) {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  return tmp.textContent || '';
+}
+
+async function loadData() {
+  const [postsRaw, commentsRaw] = await Promise.all([
+    fetch('comments/posts_index.json').then(r => r.json()),
+    fetch('comments/all_comments.json').then(r => r.json()),
+  ]);
+  allPosts = postsRaw;
+  allComments = commentsRaw;
+
+  // Index by post
+  for (const c of allComments) {
+    if (!commentsByPost[c.post_id]) commentsByPost[c.post_id] = [];
+    commentsByPost[c.post_id].push(c);
+  }
+
+  // Author stats
+  for (const c of allComments) {
+    if (!authorStats[c.author_name]) authorStats[c.author_name] = { total: 0, posts: new Set() };
+    authorStats[c.author_name].total++;
+    authorStats[c.author_name].posts.add(c.post_id);
+  }
+
+  document.getElementById('loading').style.display = 'none';
+
+  // Populate author datalist for chart
+  const dl = document.getElementById('chart-author-list');
+  Object.keys(authorStats).sort().forEach(name => {
+    const opt = document.createElement('option'); opt.value = name; dl.appendChild(opt);
+  });
+
+  updateStats();
+  renderEpisodes();
+  // Auto-select the most recent episode
+  if (allPosts.length > 0) selectEpisode(allPosts[0].post_id);
+}
+
+function updateStats() {
+  const filtered = getFilteredComments();
+  document.getElementById('stat-posts').innerHTML =
+    `<span>${allPosts.length}</span> episodes`;
+  document.getElementById('stat-comments').innerHTML =
+    `<span>${filtered.length}</span> comments${activeAuthor ? ' by author' : ''}`;
+  document.getElementById('stat-authors').innerHTML =
+    `<span>${Object.keys(authorStats).length}</span> authors`;
+}
+
+function getFilteredComments() {
+  let c = allComments;
+  if (activeAuthor) c = c.filter(x => x.author_name === activeAuthor);
+  if (globalSearch) {
+    const q = globalSearch.toLowerCase();
+    c = c.filter(x =>
+      stripHtml(x.content).toLowerCase().includes(q) ||
+      x.author_name.toLowerCase().includes(q) ||
+      x.post_title.toLowerCase().includes(q)
+    );
+  }
+  return c;
+}
+
+/* ── Authors ── */
+function renderAuthors() {
+  const q = document.getElementById('author-search').value.toLowerCase();
+  const colHeaders = document.getElementById('authors-col-headers');
+  const panelTitle = document.getElementById('authors-panel-title');
+
+  // Episode mode: show authors from current episode with ep-count + total columns
+  if (activePostId) {
+    colHeaders.style.display = '';
+    panelTitle.textContent = 'Authors – this episode';
+
+    const epComments = commentsByPost[activePostId] || [];
+    // Count per author for this episode
+    const epCount = {};
+    for (const c of epComments) epCount[c.author_name] = (epCount[c.author_name] || 0) + 1;
+
+    let entries = Object.entries(epCount)
+      .map(([name, ep]) => ({ name, ep, total: authorStats[name]?.total || 0 }))
+      .sort((a, b) => b.ep - a.ep || b.total - a.total);
+
+    if (q) entries = entries.filter(e => e.name.toLowerCase().includes(q));
+
+    const html = entries.map(({ name, ep, total }) => {
+      const active = name === activeAuthor ? 'active' : '';
+      return `<div class="author-item ${active}" onclick="selectAuthor(${JSON.stringify(name)})">
+        <span class="author-rank"></span>
+        <span class="author-name" title="${name}">${name}</span>
+        <span class="author-count ep" title="Comments on this episode">${ep}</span>
+        <span class="author-count" title="All-time total">${total}</span>
+      </div>`;
+    }).join('');
+
+    document.getElementById('authors-list').innerHTML = html || '<div class="no-data">No authors</div>';
+    return;
+  }
+
+  // Global mode: ranked by all-time total
+  colHeaders.style.display = 'none';
+  panelTitle.textContent = 'Authors';
+
+  const sorted = Object.entries(authorStats)
+    .sort((a, b) => b[1].total - a[1].total);
+
+  const filtered = q ? sorted.filter(([name]) => name.toLowerCase().includes(q)) : sorted;
+
+  const html = filtered.map(([name, stats]) => {
+    const rank = sorted.findIndex(([n]) => n === name) + 1;
+    const active = name === activeAuthor ? 'active' : '';
+    return `<div class="author-item ${active}" onclick="selectAuthor(${JSON.stringify(name)})">
+      <span class="author-rank">${rank}</span>
+      <span class="author-name" title="${name}">${name}</span>
+      <span class="author-count">${stats.total}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('authors-list').innerHTML = html || '<div class="no-data">No match</div>';
+}
+
+function selectAuthor(name) {
+  if (activeAuthor === name && activePostId === null) {
+    clearAuthorFilter();
+    return;
+  }
+  activeAuthor = name;
+  activePostId = null;  // clear episode → show all comments by this author
+  document.getElementById('clear-author-btn').style.display = '';
+  renderAuthors();
+  renderEpisodes();
+  updateStats();
+  renderAllAuthorComments();
+}
+
+function clearAuthorFilter() {
+  activeAuthor = null;
+  activePostId = null;
+  document.getElementById('clear-author-btn').style.display = 'none';
+  renderAuthors();
+  renderEpisodes();
+  updateStats();
+  document.getElementById('comments-title').textContent = 'Select an episode';
+  document.getElementById('comments-meta').textContent = '';
+  document.getElementById('comments-list').innerHTML =
+    '<div class="no-data">👈 Select an episode to view its comments.</div>';
+}
+
+/* ── Episodes ── */
+function renderEpisodes() {
+  const q = document.getElementById('episode-search').value.toLowerCase();
+  let posts = allPosts;
+
+  if (activeAuthor) {
+    const postIds = authorStats[activeAuthor]?.posts || new Set();
+    posts = posts.filter(p => postIds.has(p.post_id));
+  }
+  if (q) posts = posts.filter(p => p.title.toLowerCase().includes(q) ||
+                                    p.date.includes(q));
+
+  // For each post, compute filtered comment count
+  const html = posts.map(p => {
+    const all = commentsByPost[p.post_id] || [];
+    const filtered = activeAuthor ? all.filter(c => c.author_name === activeAuthor) : all;
+    const active = p.post_id === activePostId ? 'active' : '';
+    const pillClass = activeAuthor ? 'has-filter' : '';
+    return `<div class="episode-item ${active}" onclick="selectEpisode(${p.post_id})">
+      <div class="episode-title">${p.title}</div>
+      <div class="episode-meta">
+        <span>${p.date.slice(0,10)}</span>
+        <span class="comment-pill ${pillClass}">${filtered.length} 💬</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('episodes-list').innerHTML =
+    html || '<div class="no-data">No episodes found</div>';
+}
+
+function selectEpisode(postId) {
+  if (activePostId === postId) {
+    // Deselect: if an author is active show all their comments, else clear
+    activePostId = null;
+    renderEpisodes();
+    renderAuthors();
+    if (activeAuthor) renderAllAuthorComments();
+    else {
+      document.getElementById('comments-title').textContent = 'Select an episode';
+      document.getElementById('comments-meta').textContent = '';
+      document.getElementById('comments-list').innerHTML =
+        '<div class="no-data">👈 Select an episode to view its comments.</div>';
+    }
+    return;
+  }
+  activePostId = postId;
+  renderEpisodes();
+  renderAuthors();
+  renderComments(postId);
+}
+
+/* ── All comments by author (across all episodes) ── */
+function renderAllAuthorComments() {
+  if (!activeAuthor) return;
+
+  let comments = allComments.filter(c => c.author_name === activeAuthor);
+  if (globalSearch) {
+    const q = globalSearch.toLowerCase();
+    comments = comments.filter(c => stripHtml(c.content).toLowerCase().includes(q));
+  }
+  comments = [...comments].sort((a, b) => a.date.localeCompare(b.date));
+
+  document.getElementById('comments-title').textContent = `All comments by ${activeAuthor}`;
+  document.getElementById('comments-meta').textContent =
+    `${comments.length} comment${comments.length !== 1 ? 's' : ''} across ${authorStats[activeAuthor]?.posts.size || 0} episodes · click an episode in the list to scope down`;
+
+  const formatDate = d => {
+    const dt = new Date(d);
+    return dt.toLocaleDateString('de-DE', {day:'2-digit',month:'2-digit',year:'numeric'}) +
+           ' ' + dt.toLocaleTimeString('de-DE', {hour:'2-digit',minute:'2-digit'});
+  };
+
+  const html = comments.map(c => {
+    return `<div class="comment-card highlight" id="c${c.comment_id}">
+      <div class="comment-episode-link" onclick="selectEpisode(${c.post_id})" title="${c.post_title}">${c.post_title} · ${c.post_date.slice(0,10)}</div>
+      <div class="comment-top">
+        <span class="comment-author">${c.author_name}</span>
+        <span class="comment-date">${formatDate(c.date)}</span>
+      </div>
+      <div class="comment-body">${c.content}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('comments-list').innerHTML =
+    html || '<div class="no-data">No comments found.</div>';
+}
+
+/* ── Comments ── */
+function renderComments(postId) {
+  const post = allPosts.find(p => p.post_id === postId);
+  if (!post) return;
+
+  let comments = commentsByPost[postId] || [];
+  if (activeAuthor) comments = comments.filter(c => c.author_name === activeAuthor);
+  if (globalSearch) {
+    const q = globalSearch.toLowerCase();
+    comments = comments.filter(c =>
+      stripHtml(c.content).toLowerCase().includes(q) ||
+      c.author_name.toLowerCase().includes(q)
+    );
+  }
+
+  // Sort chronologically
+  comments = [...comments].sort((a, b) => a.date.localeCompare(b.date));
+
+  // Build parent map for threading
+  const byId = {};
+  for (const c of (commentsByPost[postId] || [])) byId[c.comment_id] = c;
+
+  document.getElementById('comments-title').textContent = post.title;
+  document.getElementById('comments-meta').textContent =
+    `${post.date.slice(0,10)} · ${(commentsByPost[postId]||[]).length} total comments` +
+    (activeAuthor ? ` · showing ${comments.length} by ${activeAuthor}` : '');
+
+  const formatDate = d => {
+    const dt = new Date(d);
+    return dt.toLocaleDateString('de-DE', {day:'2-digit',month:'2-digit',year:'numeric'}) +
+           ' ' + dt.toLocaleTimeString('de-DE', {hour:'2-digit',minute:'2-digit'});
+  };
+
+  const html = comments.map(c => {
+    const isReply = c.parent > 0 ? 'is-reply' : '';
+    const hlClass = c.author_name === activeAuthor ? ' highlight' : '';
+    return `<div class="comment-card ${isReply}${hlClass}" id="c${c.comment_id}">
+      <div class="comment-top">
+        <span class="comment-author" onclick="selectAuthor(${JSON.stringify(c.author_name)})">${c.author_name}</span>
+        <span class="comment-date">${formatDate(c.date)}</span>
+      </div>
+      <div class="comment-body">${c.content}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('comments-list').innerHTML =
+    html || '<div class="no-data">No comments match the current filter.</div>';
+}
+
+/* ── Main tab switching ── */
+function switchMainTab(tab) {
+  document.getElementById('nav-explorer').classList.toggle('active', tab === 'explorer');
+  document.getElementById('nav-chart').classList.toggle('active', tab === 'chart');
+  document.querySelector('.layout').style.display = tab === 'explorer' ? 'flex' : 'none';
+  document.getElementById('chart-pane').classList.toggle('active', tab === 'chart');
+  if (tab === 'chart') renderChart();
+}
+
+/* ── Chart ── */
+let chartInstance = null;
+
+function getChartKey(dateStr) {
+  const d = new Date(dateStr);
+  const group = document.getElementById('chart-group').value;
+  if (group === 'year')  return `${d.getFullYear()}`;
+  if (group === 'month') return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+  if (group === 'week') {
+    // ISO week
+    const tmp = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    tmp.setUTCDate(tmp.getUTCDate() + 4 - (tmp.getUTCDay() || 7));
+    const yearStart = new Date(Date.UTC(tmp.getUTCFullYear(), 0, 1));
+    const week = Math.ceil((((tmp - yearStart) / 86400000) + 1) / 7);
+    return `${tmp.getUTCFullYear()}-W${String(week).padStart(2,'0')}`;
+  }
+}
+
+// 10 distinct colours for the top-10 series
+// 50 distinct colours generated by cycling hue in HSL
+const TOP10_COLORS = Array.from({length: 50}, (_, i) => {
+  const h = (i * 137.508) % 360;           // golden-angle spacing
+  const s = 65 + (i % 3) * 10;            // 65/75/85%
+  const l = 55 + (i % 2) * 10;            // 55/65%
+  return `hsl(${h.toFixed(1)},${s}%,${l}%)`;
+});
+
+function bucketComments(comments, labels) {
+  const counts = {};
+  for (const c of comments) counts[getChartKey(c.date)] = (counts[getChartKey(c.date)] || 0) + 1;
+  return labels.map(l => counts[l] || 0);
+}
+
+function applyCumulative(values) {
+  let running = 0;
+  return values.map(v => (running += v));
+}
+
+function renderChart() {
+  const authorFilter = document.getElementById('chart-author-input').value.trim();
+  const showTop10    = document.getElementById('chart-top10').checked;
+  const cumulative   = document.getElementById('chart-cumulative').checked;
+  const chartType    = document.getElementById('chart-type').value;
+
+  // Badge
+  const badge = document.getElementById('chart-author-badge');
+  badge.style.display = (authorFilter && !showTop10) ? '' : 'none';
+  if (authorFilter && !showTop10) badge.textContent = authorFilter;
+
+  // Disable author input when top10 is on
+  document.getElementById('chart-author-input').disabled = showTop10;
+
+  // Gather all labels (full time range)
+  const allKeys = {};
+  for (const c of allComments) allKeys[getChartKey(c.date)] = 1;
+  const labels = Object.keys(allKeys).sort();
+
+  let datasets = [];
+
+  if (showTop10) {
+    // Top 10 authors by total comments
+    const top10 = Object.entries(authorStats)
+      .sort((a, b) => b[1].total - a[1].total)
+      .slice(0, 50)
+      .map(([name]) => name);
+
+    const top10Set = new Set(top10);
+
+    datasets = top10.map((name, i) => {
+      const authorComments = allComments.filter(c => c.author_name === name);
+      let values = bucketComments(authorComments, labels);
+      if (cumulative) values = applyCumulative(values);
+      const color = TOP10_COLORS[i];
+      return {
+        label: name,
+        data: values,
+        backgroundColor: chartType === 'bar' ? color : color + '26',
+        borderColor: color,
+        borderWidth: chartType === 'line' ? 2 : 0,
+        fill: false,
+        tension: 0.3,
+        pointRadius: labels.length > 60 ? 0 : 2,
+        pointHoverRadius: 5,
+      };
+    });
+
+    // "Rest" — everyone outside the top 10
+    const restComments = allComments.filter(c => !top10Set.has(c.author_name));
+    let restValues = bucketComments(restComments, labels);
+    if (cumulative) restValues = applyCumulative(restValues);
+    const restColor = '#6e7681';
+    datasets.push({
+      label: 'Rest',
+      data: restValues,
+      backgroundColor: chartType === 'bar' ? restColor : restColor + '26',
+      borderColor: restColor,
+      borderWidth: chartType === 'line' ? 2 : 0,
+      fill: false,
+      tension: 0.3,
+      pointRadius: labels.length > 60 ? 0 : 2,
+      pointHoverRadius: 5,
+    });
+
+  } else {
+    // Single series: one author or all
+    let comments = authorFilter
+      ? allComments.filter(c => c.author_name === authorFilter)
+      : allComments;
+    let values = bucketComments(comments, labels);
+    if (cumulative) values = applyCumulative(values);
+    const color = authorFilter ? '#58a6ff' : '#f78166';
+    datasets = [{
+      label: authorFilter ? `${authorFilter}` : 'All comments',
+      data: values,
+      backgroundColor: chartType === 'bar' ? color : color + '26',
+      borderColor: color,
+      borderWidth: chartType === 'line' ? 2 : 0,
+      fill: chartType === 'line',
+      tension: 0.3,
+      pointRadius: labels.length > 60 ? 0 : 3,
+      pointHoverRadius: 5,
+    }];
+  }
+
+  if (chartInstance) chartInstance.destroy();
+
+  const ctx = document.getElementById('myChart').getContext('2d');
+  chartInstance = new Chart(ctx, {
+    type: chartType,
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          labels: { color: '#8b949e', font: { size: 11 }, boxWidth: 12, padding: 16 }
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}`
+          }
+        }
+      },
+      scales: {
+        x: {
+          stacked: chartType === 'bar' && showTop10,
+          ticks: { color: '#8b949e', maxRotation: 45, autoSkip: true, maxTicksLimit: 24 },
+          grid: { color: '#21262d' }
+        },
+        y: {
+          stacked: chartType === 'bar' && showTop10,
+          ticks: { color: '#8b949e' },
+          grid: { color: '#21262d' },
+          title: {
+            display: true,
+            text: cumulative ? 'Cumulative comments' : 'Comments',
+            color: '#8b949e', font: { size: 11 }
+          }
+        }
+      }
+    }
+  });
+}
+
+
+/* ── Event wiring ── */
+document.getElementById('author-search').addEventListener('input', renderAuthors);
+
+document.getElementById('episode-search').addEventListener('input', renderEpisodes);
+
+document.getElementById('search-global').addEventListener('input', e => {
+  globalSearch = e.target.value;
+  updateStats();
+  renderEpisodes();
+  if (activePostId) renderComments(activePostId);
+  else if (activeAuthor) renderAllAuthorComments();
+});
+
+['chart-group','chart-type','chart-cumulative','chart-top10'].forEach(id =>
+  document.getElementById(id).addEventListener('change', () => {
+    if (document.getElementById('chart-pane').classList.contains('active')) renderChart();
+  })
+);
+document.getElementById('chart-author-input').addEventListener('input', () => {
+  if (document.getElementById('chart-pane').classList.contains('active')) renderChart();
+});
+
+loadData();
+</script>
+</body>
+</html>
