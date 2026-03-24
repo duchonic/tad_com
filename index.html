@@ -459,6 +459,7 @@ function clearAuthorFilter() {
 /* ── Episodes ── */
 function renderEpisodes() {
   const q = document.getElementById('episode-search').value.toLowerCase();
+  const gs = globalSearch.toLowerCase();
   let posts = allPosts;
 
   if (activeAuthor) {
@@ -468,12 +469,27 @@ function renderEpisodes() {
   if (q) posts = posts.filter(p => p.title.toLowerCase().includes(q) ||
                                     p.date.includes(q));
 
+  // When a global keyword search is active, only show episodes that have matching comments
+  if (gs) {
+    posts = posts.filter(p => {
+      const cs = commentsByPost[p.post_id] || [];
+      return cs.some(c =>
+        stripHtml(c.content).toLowerCase().includes(gs) ||
+        c.author_name.toLowerCase().includes(gs)
+      );
+    });
+  }
+
   // For each post, compute filtered comment count
   const html = posts.map(p => {
     const all = commentsByPost[p.post_id] || [];
-    const filtered = activeAuthor ? all.filter(c => c.author_name === activeAuthor) : all;
+    let filtered = activeAuthor ? all.filter(c => c.author_name === activeAuthor) : all;
+    if (gs) filtered = filtered.filter(c =>
+      stripHtml(c.content).toLowerCase().includes(gs) ||
+      c.author_name.toLowerCase().includes(gs)
+    );
     const active = p.post_id === activePostId ? 'active' : '';
-    const pillClass = activeAuthor ? 'has-filter' : '';
+    const pillClass = (activeAuthor || gs) ? 'has-filter' : '';
     return `<div class="episode-item ${active}" onclick="selectEpisode(${p.post_id})">
       <div class="episode-title">${p.title}</div>
       <div class="episode-meta">
@@ -517,7 +533,7 @@ function renderAllAuthorComments() {
     const q = globalSearch.toLowerCase();
     comments = comments.filter(c => stripHtml(c.content).toLowerCase().includes(q));
   }
-  comments = [...comments].sort((a, b) => a.date.localeCompare(b.date));
+  comments = [...comments].sort((a, b) => b.date.localeCompare(a.date));
 
   document.getElementById('comments-title').textContent = `All comments by ${activeAuthor}`;
   document.getElementById('comments-meta').textContent =
@@ -559,8 +575,8 @@ function renderComments(postId) {
     );
   }
 
-  // Sort chronologically
-  comments = [...comments].sort((a, b) => a.date.localeCompare(b.date));
+  // Sort newest first
+  comments = [...comments].sort((a, b) => b.date.localeCompare(a.date));
 
   // Build parent map for threading
   const byId = {};
