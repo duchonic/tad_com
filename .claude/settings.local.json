@@ -6,7 +6,11 @@
       "Bash(pip install:*)",
       "Bash(python -m playwright install chromium)",
       "Bash(python -m playwright install-deps chromium)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(pkill -f \"python.*http.server\")"
     ]
   }
 }
