@@ -226,7 +226,8 @@
   <div class="stat-badge" id="stat-authors"></div>
   <div style="display:flex;gap:4px;margin-left:8px">
     <button class="nav-tab active" id="nav-explorer" onclick="switchMainTab('explorer')">Explorer</button>
-    <button class="nav-tab" id="nav-chart" id="chart-tab-btn" onclick="switchMainTab('chart')">Chart</button>
+    <button class="nav-tab" id="nav-chart" onclick="switchMainTab('chart')">Chart</button>
+    <button class="nav-tab" id="nav-newaudiences" onclick="switchMainTab('newaudiences')">New Audiences</button>
     <a class="nav-tab" href="ki_suspects.html">KI Suspects</a>
   </div>
 </header>
@@ -298,11 +299,21 @@
   </div>
 </div>
 
+<!-- New Audiences pane -->
+<div id="newaudiences-pane" style="display:none;flex:1;flex-direction:column;overflow:hidden;background:var(--bg)">
+  <div style="padding:16px 24px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0">
+    <div style="font-size:0.95rem;font-weight:600;margin-bottom:4px">New Audiences</div>
+    <div style="font-size:0.78rem;color:var(--text-muted)">Episodes where &gt;20% of authors commented for the first time <em>and</em> &lt;60% of authors have more than 10 total comments</div>
+  </div>
+  <div id="newaudiences-list" style="overflow-y:auto;flex:1;padding:16px"></div>
+</div>
+
 <script>
 let allPosts = [];       // posts_index.json
 let allComments = [];    // all_comments.json
 let commentsByPost = {}; // post_id → [comments]
 let authorStats = {};    // author_name → { total, posts: Set }
+let firstTimerPct = {};  // post_id → pct (0-100) of unique authors commenting for first time
 let activeAuthor = null;
 let activePostId = null;  // null = show all episodes for active author
 let globalSearch = '';
@@ -332,6 +343,20 @@ async function loadData() {
     if (!authorStats[c.author_name]) authorStats[c.author_name] = { total: 0, posts: new Set() };
     authorStats[c.author_name].total++;
     authorStats[c.author_name].posts.add(c.post_id);
+  }
+
+  // First-time commenter % per post
+  // Sort posts oldest→newest to walk chronologically
+  const postsByDate = [...allPosts].sort((a, b) => a.date.localeCompare(b.date));
+  const seenAuthors = new Set();
+  for (const p of postsByDate) {
+    const comments = commentsByPost[p.post_id] || [];
+    const uniqueAuthors = [...new Set(comments.map(c => c.author_name))];
+    const firstTimers = uniqueAuthors.filter(a => !seenAuthors.has(a));
+    firstTimerPct[p.post_id] = uniqueAuthors.length > 0
+      ? Math.round(firstTimers.length / uniqueAuthors.length * 100)
+      : 0;
+    for (const a of uniqueAuthors) seenAuthors.add(a);
   }
 
   document.getElementById('loading').style.display = 'none';
@@ -491,11 +516,23 @@ function renderEpisodes() {
     );
     const active = p.post_id === activePostId ? 'active' : '';
     const pillClass = (activeAuthor || gs) ? 'has-filter' : '';
+    const pct = firstTimerPct[p.post_id] ?? 0;
+    const firstTimerBadge = pct > 0
+      ? `<span class="comment-pill" title="% of unique authors commenting for the first time" style="color:var(--gold)">${pct}% new</span>`
+      : '';
+    const uniqueAuthors = [...new Set((commentsByPost[p.post_id] || []).map(c => c.author_name))];
+    const casualCount = uniqueAuthors.filter(a => (authorStats[a]?.total || 0) < 10).length;
+    const casualPct = uniqueAuthors.length > 0 ? Math.round(casualCount / uniqueAuthors.length * 100) : 0;
+    const casualBadge = casualPct > 0
+      ? `<span class="comment-pill" title="% of unique authors with fewer than 10 total comments" style="color:#a8dadc">${casualPct}% &lt;10</span>`
+      : '';
     return `<div class="episode-item ${active}" onclick="selectEpisode(${p.post_id})">
       <div class="episode-title">${p.title}</div>
       <div class="episode-meta">
         <span>${p.date.slice(0,10)}</span>
         <span class="comment-pill ${pillClass}">${filtered.length} 💬</span>
+        ${firstTimerBadge}
+        ${casualBadge}
       </div>
     </div>`;
   }).join('');
@@ -614,9 +651,44 @@ function renderComments(postId) {
 function switchMainTab(tab) {
   document.getElementById('nav-explorer').classList.toggle('active', tab === 'explorer');
   document.getElementById('nav-chart').classList.toggle('active', tab === 'chart');
+  document.getElementById('nav-newaudiences').classList.toggle('active', tab === 'newaudiences');
   document.querySelector('.layout').style.display = tab === 'explorer' ? 'flex' : 'none';
   document.getElementById('chart-pane').classList.toggle('active', tab === 'chart');
+  document.getElementById('newaudiences-pane').style.display = tab === 'newaudiences' ? 'flex' : 'none';
   if (tab === 'chart') renderChart();
+  if (tab === 'newaudiences') renderNewAudiences();
+}
+
+function renderNewAudiences() {
+  const rows = [];
+  for (const p of allPosts) {
+    const pid = p.post_id;
+    const unique = [...new Set((commentsByPost[pid] || []).map(c => c.author_name))];
+    if (!unique.length) continue;
+    const newPct = firstTimerPct[pid] ?? 0;
+    const expCount = unique.filter(a => (authorStats[a]?.total || 0) > 10).length;
+    const expPct = Math.round(expCount / unique.length * 100);
+    if (newPct > 20 && expPct <= 60) {
+      rows.push({ p, newPct, expPct, authors: unique.length });
+    }
+  }
+  // Sort newest first
+  rows.sort((a, b) => b.p.date.localeCompare(a.p.date));
+
+  const html = rows.map(({ p, newPct, expPct, authors }) => `
+    <div style="display:flex;align-items:center;gap:12px;padding:8px 12px;
+         background:var(--surface);border:1px solid var(--border);border-radius:8px;
+         margin-bottom:8px;cursor:pointer"
+         onclick="switchMainTab('explorer');setTimeout(()=>selectEpisode(${p.post_id}),50)">
+      <span style="font-size:0.72rem;color:var(--text-muted);white-space:nowrap;width:88px">${p.date.slice(0,10)}</span>
+      <span style="flex:1;font-size:0.85rem">${p.title}</span>
+      <span style="font-size:0.72rem;white-space:nowrap;width:40px;text-align:right;color:var(--text-muted)">${authors} auth.</span>
+      <span style="font-size:0.72rem;background:var(--bg);border-radius:8px;padding:2px 8px;color:var(--gold);white-space:nowrap">${newPct}% new</span>
+      <span style="font-size:0.72rem;background:var(--bg);border-radius:8px;padding:2px 8px;color:#a8dadc;white-space:nowrap">${expPct}% &gt;10</span>
+    </div>`).join('');
+
+  document.getElementById('newaudiences-list').innerHTML =
+    html || '<div class="no-data">No episodes match the criteria.</div>';
 }
 
 /* ── Chart ── */
